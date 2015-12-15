@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="crossovered_budget_view_form" model="ir.ui.view" >
+            <field name="name">crossovered.budget.view.form</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='creating_user_id']" position="after">
+                    <field name="d1" />
+                    <field name="d2" />
+                    <field name="d3" />
+                    <field name="d4" />
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="domain">[('d1', '=', parent.d1)]</attribute>
+                    <attribute name="domain">[('d2', '=', parent.d2)]</attribute>
+                    <attribute name="domain">[('d3', '=', parent.d3)]</attribute>
+                    <attribute name="domain">[('d4', '=', parent.d4)]</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/form//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="domain">[('d1', '=', parent.d1)]</attribute>
+                    <attribute name="domain">[('d2', '=', parent.d2)]</attribute>
+                    <attribute name="domain">[('d3', '=', parent.d3)]</attribute>
+                    <attribute name="domain">[('d4', '=', parent.d4)]</attribute>
+                </xpath>
+            </field>
+        </record>         
+
+     </data>
+</openerp>

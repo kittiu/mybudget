@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+	<record id="view_analytic_multi_dimension_report_tree" model="ir.ui.view">
+	    <field name="name">analytic.multi.dimension.report.tree</field>
+	    <field name="model">analytic.multi.dimension.report</field>
+	    <field name="arch" type="xml">
+	        <tree string="Analytic Multi Dimension">
+	            <field name="d1"/>
+	            <field name="d2"/>
+	            <field name="d3"/>
+	            <field name="d4"/>
+	            <field name="d5"/>
+	            <field name="debit" sum="Debit"/>
+	            <field name="credit" sum="Credit"/>
+	        </tree>
+	    </field>
+	</record>
+
+    <record id="view_analytic_multi_dimension_report_pivot" model="ir.ui.view">
+         <field name="name">analytic.multi.dimension.report.pivot</field>
+         <field name="model">analytic.multi.dimension.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Analytic Multi Dimension" disable_linking="True">
+                 <field name="d1" type="row"/>
+                 <field name="debit" type="measure"/>
+                 <field name="credit" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_analytic_multi_dimension_report_graph" model="ir.ui.view">
+         <field name="name">analytic.multi.dimension.report.graph</field>
+         <field name="model">analytic.multi.dimension.report</field>
+         <field name="arch" type="xml">
+             <graph string="Analytic Multi Dimension">
+                 <field name="d1"/>
+                 <field name="debit" type="measure"/>
+                 <field name="credit" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="action_analytic_multi_dimension_report_all" model="ir.actions.act_window">
+        <field name="name">Analytic Multi Dimension</field>
+        <field name="res_model">analytic.multi.dimension.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,pivot,graph</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref=""/>
+        <field name="help"></field>
+    </record>
+
+    <menuitem name="Analytic Multi Dimension" action="action_analytic_multi_dimension_report_all" id="menu_action_analytic_multi_dimension_report_all" parent="account.account_reports_business_intelligence_menu" sequence="100"/>
+
+</data>
+</openerp>
