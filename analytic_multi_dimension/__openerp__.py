@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name' : 'Analytic Multi Dimension',
+    'name': 'Analytic Multi Dimension',
     'version': '1.0',
-    'website' : 'http://ecosoft.co.th',
+    'website': 'http://ecosoft.co.th',
     'category': 'Hidden/Dependency',
-    'depends' : ['analytic', 'account_budget', ],
+    'depends': ['account',
+                'analytic',
+                'account_budget', ],
     'description': """
 Extend Analytic to have multiple dimensions.
 =============================================
@@ -15,8 +17,10 @@ Extend Analytic to have multiple dimensions.
 #         'security/analytic_security.xml',
 #         'security/ir.model.access.csv',
         'views/account_dimension.xml',
-        'views/analytic_view.xml',
-        'views/account_budget_view.xml',
+        'views/analytic.xml',
+        'views/account_budget.xml',
+        'views/account_activity.xml',
+        'views/account_invoice.xml',
 #         'data/account.dimension.csv',
 #         'data/account.dimension.line.csv',
 #         'data/account.analytic.account.csv',

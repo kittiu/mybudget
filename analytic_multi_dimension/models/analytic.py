@@ -84,9 +84,14 @@ class AccountAnalyticAccount(models.Model):
         domain="[('dimension_id.code', '=', 'd10')]",
         ondelete='set null',
     )
+    activity_id = fields.Many2one(
+        'account.activity',
+        string='Activity',
+        ondelete='set null',
+    )
     _sql_constraints = [
         ('dimension_uniq',
-         'unique(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10)',
+         'unique(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, activity_id)',
          'Analytic Account Dimensions must be unique!'),
     ]
 
@@ -103,16 +108,20 @@ class AccountAnalyticAccount(models.Model):
                 node.set('string', d[1])
                 setup_modifiers(node, result['fields'][d[0]])
         result['arch'] = etree.tostring(doc)
-        print result
         return result
+
+    @api.onchange('dimension_group_id')
+    def onchange_dimension_group_id(self):
+        for d in self.env['account.dimension'].DIMENSIONS:
+            self[d[0]] = False
 
     @api.multi
     @api.depends('dimension_group_id')
     def _compute_dimension_active(self):
-        for analytic in self:
+        for rec in self:
             codes = [(line.dimension_id.code, line.dimension_id.name) for
-                     line in analytic.dimension_group_id.dimension_ids]
+                     line in rec.dimension_group_id.dimension_ids]
             for d in self.env['account.dimension'].DIMENSIONS:
-                analytic[d[0] + '_active'] = False
+                rec[d[0] + '_active'] = False
             for d in codes:
-                analytic[d[0] + '_active'] = True
+                rec[d[0] + '_active'] = True

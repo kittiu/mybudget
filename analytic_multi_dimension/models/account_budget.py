@@ -103,16 +103,70 @@ class CrossoveredBudget(models.Model):
                 node.set('string', d[1])
                 setup_modifiers(node, result['fields'][d[0]])
         result['arch'] = etree.tostring(doc)
-        print result
         return result
+
+    @api.onchange('dimension_group_id')
+    def onchange_dimension_group_id(self):
+        for d in self.env['account.dimension'].DIMENSIONS:
+            self[d[0]] = False
 
     @api.multi
     @api.depends('dimension_group_id')
     def _compute_dimension_active(self):
-        for analytic in self:
+        for rec in self:
             codes = [(line.dimension_id.code, line.dimension_id.name) for
-                     line in analytic.dimension_group_id.dimension_ids]
+                     line in rec.dimension_group_id.dimension_ids]
             for d in self.env['account.dimension'].DIMENSIONS:
-                analytic[d[0] + '_active'] = False
+                rec[d[0] + '_active'] = False
             for d in codes:
-                analytic[d[0] + '_active'] = True
+                rec[d[0] + '_active'] = True
+
+    @api.multi
+    def budget_validate(self):
+        self.crossovered_budget_line.create_analytic_account_activity()
+        return super(CrossoveredBudget, self).budget_validate()
+
+
+class CrossoveredBudgetLines(models.Model):
+    _inherit = 'crossovered.budget.lines'
+
+    activity_id = fields.Many2one(
+        'account.activity',
+        string='Activity',
+        required=True,
+    )
+
+    @api.onchange('activity_id')
+    def onchange_activity_id(self):
+        self.general_budget_id = self.activity_id.budget_post_id
+
+#     @api.model
+#     def create(self, vals):
+#         res = super(CrossoveredBudgetLines, self).create(vals)
+#         res.create_analytic_account_activity()
+#         return res
+
+    @api.multi
+    def create_analytic_account_activity(self):
+        """ Create analytic account for those not been created """
+        analytic_obj = self.env['account.analytic.account']
+        dimension_obj = self.env['account.dimension']
+        for line in self:
+            # Populate Domain
+            group_id = line.crossovered_budget_id.dimension_group_id.id
+            activity_id = line.activity_id.id
+            domain = [('dimension_group_id', '=', group_id),
+                      ('activity_id', '=', activity_id)]
+            for d in dimension_obj.DIMENSIONS:
+                domain.append((d[0], '=', line.crossovered_budget_id[d[0]].id))
+            # Check existing analytic account
+            analytics = self.env['account.analytic.account'].search(domain)
+            # Create and assign
+            if len(analytics) == 0:
+                vals = dict((x[0], x[2]) for x in domain)
+                vals['name'] = line.activity_id.name
+                vals['activity_id'] = line.activity_id.id
+                line.analytic_account_id = analytic_obj.create(vals)
+            else:
+                line.analytic_account_id = analytics[0].id
+        return

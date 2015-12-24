@@ -29,6 +29,7 @@
                     <field name="d8" attrs="{'invisible': [('d8_active', '=', False)]}"/>
                     <field name="d9" attrs="{'invisible': [('d9_active', '=', False)]}"/>
                     <field name="d10" attrs="{'invisible': [('d10_active', '=', False)]}"/>
+                    <field name="activity_id" />
                 </xpath>
             </field>
         </record>         

@@ -34,10 +34,13 @@
                     <attribute name="readonly">1</attribute>
                 </xpath>
                 <xpath expr="/form/sheet/notebook/page/field/form//field[@name='analytic_account_id']" position="attributes">
-                    <attribute name="domain">[('d1', '=', parent.d1)]</attribute>
-                    <attribute name="domain">[('d2', '=', parent.d2)]</attribute>
-                    <attribute name="domain">[('d3', '=', parent.d3)]</attribute>
-                    <attribute name="domain">[('d4', '=', parent.d4)]</attribute>
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='analytic_account_id']" position="before">
+                    <field name="activity_id" />
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/form//field[@name='analytic_account_id']" position="before">
+                    <field name="activity_id" />
                 </xpath>
             </field>
         </record>         
