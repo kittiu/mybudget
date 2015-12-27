@@ -1,0 +1,18 @@
+id,dimension_id/id,name
+base.dimension_line_1,base.dimension_org,CO
+base.dimension_line_2,base.dimension_dept,IS
+base.dimension_line_3,base.dimension_programme,Capacity
+base.dimension_line_4,base.dimension_project,myPABI
+base.dimension_line_5,base.dimension_project,Cluster
+base.dimension_line_6,base.dimension_activity_group,Staff cost
+base.dimension_line_7,base.dimension_activity_group,Training
+base.dimension_line_8,base.dimension_activity_group,Meeting
+base.dimension_line_9,base.dimension_activity,Salary
+base.dimension_line_10,base.dimension_activity,Welfare
+base.dimension_line_11,base.dimension_activity,Training Room
+base.dimension_line_12,base.dimension_activity,Pax
+base.dimension_line_13,base.dimension_activity,Training materials
+base.dimension_line_14,base.dimension_activity,Taxi & Toll fee
+base.dimension_line_15,base.dimension_activity,Toll fee
+base.dimension_line_16,base.dimension_activity,Meeting room
+base.dimension_line_17,base.dimension_activity,Allowance

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="crossovered_budget_view_form" model="ir.ui.view" >
+            <field name="name">crossovered.budget.view.form</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='creating_user_id']" position="after">
+                    <field name="dimension_group_id" />
+                    <field name="d01_active" invisible="1"/>
+                    <field name="d02_active" invisible="1"/>
+                    <field name="d03_active" invisible="1"/>
+                    <field name="d04_active" invisible="1"/>
+                    <field name="d05_active" invisible="1"/>
+                    <field name="d06_active" invisible="1"/>
+                    <field name="d07_active" invisible="1"/>
+                    <field name="d08_active" invisible="1"/>
+                    <field name="d09_active" invisible="1"/>
+                    <field name="d10_active" invisible="1"/>
+                    <field name="d01" attrs="{'invisible': [('d01_active', '=', False)]}"/>
+                    <field name="d02" attrs="{'invisible': [('d02_active', '=', False)]}"/>
+                    <field name="d03" attrs="{'invisible': [('d03_active', '=', False)]}"/>
+                    <field name="d04" attrs="{'invisible': [('d04_active', '=', False)]}"/>
+                    <field name="d05" attrs="{'invisible': [('d05_active', '=', False)]}"/>
+                    <field name="d06" attrs="{'invisible': [('d06_active', '=', False)]}"/>
+                    <field name="d07" attrs="{'invisible': [('d07_active', '=', False)]}"/>
+                    <field name="d08" attrs="{'invisible': [('d08_active', '=', False)]}"/>
+                    <field name="d09" attrs="{'invisible': [('d09_active', '=', False)]}"/>
+                    <field name="d10" attrs="{'invisible': [('d10_active', '=', False)]}"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/form//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='analytic_account_id']" position="before">
+                    <field name="activity_id" />
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/form//field[@name='analytic_account_id']" position="before">
+                    <field name="activity_id" />
+                </xpath>
+            </field>
+        </record>         
+
+     </data>
+</openerp>

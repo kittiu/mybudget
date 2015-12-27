@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+    	<!-- Activity -->
+        <record id="view_account_activity_search" model="ir.ui.view">
+            <field name="name">view.account.activity.search</field>
+            <field name="model">account.activity</field>
+            <field name="arch" type="xml">
+                <search string="Activity">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="Activity"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_account_activity_tree" model="ir.ui.view">
+            <field name="name">view.account.activity.tree</field>
+            <field name="model">account.activity</field>
+            <field name="arch" type="xml">
+                <tree string="Activity" editable="top">
+                    <field name="name"/>
+                    <field name="budget_post_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_activity" model="ir.actions.act_window">
+            <field name="name">Activity</field>
+            <field name="res_model">account.activity</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_account_activity_tree"/>
+            <field name="search_view_id" ref="view_account_activity_search"/>
+        </record>
+        <menuitem action="action_account_activity" id="menu_account_activity" parent="account.account_management_menu" sequence="3"/>
+
+        <record model="ir.ui.view" id="view_account_activity_form">
+            <field name="name">view.account.activity.form</field>
+            <field name="model">account.activity</field>
+            <field name="arch" type="xml">
+                <form string="Activity">
+                    <group>
+                    	<group>
+	                        <field name="name"/>
+                    	</group>
+                        <group>
+                    		<field name="budget_post_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>
