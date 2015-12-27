@@ -72,6 +72,11 @@ class AccountDimension(models.Model):
         string='Name',
         required=True,
     )
+    ref_model_id = fields.Many2one(
+        'ir.model',
+        string='Referenced Model',
+        ondelete='set null',
+    )
     show_in_docline = fields.Boolean(
         string='Show in Document Line',
         default=False,
@@ -125,4 +130,23 @@ class AccountDimensionItem(models.Model):
         string='Dimension',
         required=True,
     )
-    
+    value_reference = fields.Char(
+        string='Value Reference',
+    )
+    value = fields.Char(
+        string='Value',
+        compute='_compute_value',
+    )
+
+    @api.multi
+    @api.depends('value_reference')
+    def _compute_value(self):
+        for rec in self:
+            if rec.value_reference:
+                model, res_id = rec.value_reference.split(',')
+                rec.value = self.env[model].browse(int(res_id)).name_get()[0][1]
+
+    @api.multi
+    def remove_value_reference(self):
+        for item in self:
+            item.value_reference = False

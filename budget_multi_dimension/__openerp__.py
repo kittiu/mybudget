@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Analytic Multi Dimension',
+    'name': 'Budget Multi Dimension',
     'version': '1.0',
     'website': 'http://ecosoft.co.th',
     'category': 'Hidden/Dependency',
@@ -16,6 +16,7 @@ Extend Analytic to have multiple dimensions.
     'data': [
 #         'security/analytic_security.xml',
 #         'security/ir.model.access.csv',
+        'wizard/dimension_select_value_reference.xml',
         'views/account_dimension.xml',
         'views/analytic.xml',
         'views/account_budget.xml',

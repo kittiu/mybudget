@@ -91,7 +91,6 @@
         </record>
         <menuitem action="action_account_dimension" id="menu_account_dimension" parent="account.account_management_menu" sequence="3"/>
 
-
         <record model="ir.ui.view" id="view_account_dimension_form">
             <field name="name">view.account.dimension.form</field>
             <field name="model">account.dimension</field>
@@ -104,14 +103,32 @@
                     	</group>
                         <group>
 	                        <field name="code"/>
+	                        <field name="ref_model_id" />
                         </group>
                     </group>
                     <notebook>
                         <page string="Dimension Items">
-                            <field name="item_ids">
-                                <tree editable="bottom" mode="tree">
+                            <field name="item_ids" context="{'ref_model_id': ref_model_id}">
+                                <tree editable="bottom">
                                     <field name="name"/>
+                                    <field name="value_reference"/>
+                                    <field name="value"/>
+                                    <button name="%(action_dimension_select_value_reference)d"
+                                        string="Select Value reference" type="action"
+                                        icon="terp-stock_effects-object-colorize" />    
+                                    <button name="remove_value_reference"
+                                        string="Remove Value Reference" type="object"
+                                        icon="terp-dialog-close" />    
                                 </tree>
+                                <form>
+                                	<group>
+                                    	<field name="name"/>
+                                    </group>
+                                	<group>
+                                    	<field name="value_reference"/>
+                                    	<field name="value"/>
+                                    </group>
+                                </form>
                             </field>
                         </page>
                         <page string="Used In">
@@ -125,6 +142,6 @@
                 </form>
             </field>
         </record>
-
+        
     </data>
 </openerp>

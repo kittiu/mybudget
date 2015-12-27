@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_dimension_select_value_reference" model="ir.ui.view">
+            <field name="name">view.dimension.select.value.reference</field>
+            <field name="model">dimension.select.value.reference</field>
+            <field name="arch" type="xml">
+                <form string="Assign Value Reference">
+                	<p>
+                		Select value to reference relationship between dimension and model.
+                    </p>
+                	<group>
+                    	<group>
+                        	<field name="value_reference" />
+                    	</group>
+                    	<group></group>
+                    </group>
+                    <footer>
+                        <button name="assign_value_reference" string="Assign Value Reference" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        	
+    	
+        <record id="action_dimension_select_value_reference" model="ir.actions.act_window">
+            <field name="name">Select Value Reference</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">dimension.select.value.reference</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>
