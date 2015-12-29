@@ -4,6 +4,7 @@ from lxml import etree
 from openerp.osv.orm import setup_modifiers
 from openerp import api, fields, models, _
 from openerp.exceptions import UserError, RedirectWarning, ValidationError
+from samba.netcmd import domain
 
 
 class AccountInvoice(models.Model):
@@ -264,6 +265,16 @@ class AccountInvoiceLine(models.Model):
         ondelete='set null',
         default=lambda self: self._context.get('d10'),
     )
+    # --
+    budget_post_id = fields.Many2one(
+        'account.budget.post',
+        string='Budgetary Position',
+    )
+    activity_id = fields.Many2one(
+        'account.activity',
+        string='Activity',
+        domain="[('budget_post_id', '=', budget_post_id)]",
+    )
 
     @api.multi
     def _get_analytic_line(self):
@@ -283,10 +294,16 @@ class AccountInvoiceLine(models.Model):
             for d in codes:
                 rec[d[0] + '_active'] = True
 
-    @api.onchange('account_analytic_id')
-    def _onchange_account_analytic_id(self):
-        activity = self.account_analytic_id.activity_id
-        accounts = activity.budget_post_id.account_ids
-        self.account_id = accounts and accounts[0].id or False
-        return
+    @api.onchange('activity_id')
+    def _onchange_activity_id(self):
+        """ Set Analytic and Account """
+        Analytic = self.env['account.analytic.account']
+        analytic = Analytic.get_analytic_by_full_dimension(self)
+        if analytic:
+            analytic.ensure_one()
+            self.account_analytic_id = analytic[0]
+            self.account_id = self.activity_id.account_id
+        else:
+            self.account_analytic_id = False
+            self.account_id = False
 

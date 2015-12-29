@@ -149,6 +149,11 @@ class AccountAnalyticAccount(models.Model):
         domain="[('dimension_id.code', '=', 'd10')]",
         ondelete='set null',
     )
+    budget_post_id = fields.Many2one(
+        'account.budget.post',
+        string='Budgetary Position',
+        ondelete='set null',
+    )
     activity_id = fields.Many2one(
         'account.activity',
         string='Activity',
@@ -191,3 +196,18 @@ class AccountAnalyticAccount(models.Model):
                 rec[d[0] + '_active'] = False
             for d in codes:
                 rec[d[0] + '_active'] = True
+
+    @api.model
+    def get_analytic_by_full_dimension(self, rec):
+        dimension_obj = self.env['account.dimension']
+        domain = [('activity_id', '=', rec['activity_id'].id),
+                  ('budget_post_id', '=', rec['budget_post_id'].id)]
+        for d in dimension_obj.DIMENSIONS:
+            domain.append((d[0], '=', rec[d[0]].id))
+        analytic = self.env['account.analytic.account'].search(domain)
+        if analytic:
+            analytic.ensure_one()
+            return analytic[0]
+        else:
+            return False
+        return

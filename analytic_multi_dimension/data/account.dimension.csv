@@ -1,7 +1,0 @@
-id,name,level,activity
-base.dimension_org,Org,1,FALSE
-base.dimension_dept,Dept,2,FALSE
-base.dimension_programme,Programme,3,FALSE
-base.dimension_project,Project,4,FALSE
-base.dimension_activity_group,Activity Group,5,FALSE
-base.dimension_activity,Activity,6,TRUE

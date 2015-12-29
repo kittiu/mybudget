@@ -1,8 +1,28 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from lxml import etree
-from openerp import api, fields, models
+from openerp import api, fields, models, _
 from openerp.osv.orm import setup_modifiers
+from openerp.exceptions import UserError, RedirectWarning, ValidationError
+
+
+class AccountBudgetPost(models.Model):
+    _inherit = 'account.budget.post'
+
+    activity_ids = fields.One2many(
+        'account.activity',
+        'budget_post_id',
+        string='Activities',
+    )
+
+    @api.constrains('account_ids', 'activity_ids')
+    def _check_account_id(self):
+        account_ids = [x.account_id.id for x in self.activity_ids]
+        print account_ids
+        print self.account_ids.ids
+        if not (set(account_ids) <= set(self.account_ids.ids)):
+            raise ValidationError(_('Activity account must be within '
+                                    'accounts of budgetary position'))
 
 
 class CrossoveredBudget(models.Model):
@@ -154,9 +174,11 @@ class CrossoveredBudgetLines(models.Model):
         for line in self:
             # Populate Domain
             group_id = line.crossovered_budget_id.dimension_group_id.id
+            budget_post_id = line.budget_post_id.id
             activity_id = line.activity_id.id
             domain = [('dimension_group_id', '=', group_id),
-                      ('activity_id', '=', activity_id)]
+                      ('activity_id', '=', activity_id),
+                      ('budget_post_id', '=', budget_post_id)]
             for d in dimension_obj.DIMENSIONS:
                 domain.append((d[0], '=', line.crossovered_budget_id[d[0]].id))
             # Check existing analytic account

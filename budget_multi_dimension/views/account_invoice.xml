@@ -1,42 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-    	
 
-        <record id="view_account_analytic_account_form" model="ir.ui.view" >
-            <field name="name">view.account.analytic.account.form</field>
-            <field name="model">account.analytic.account</field>
-            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="dimension_group_id" />
-                    <field name="d01_active" invisible="1"/>
-                    <field name="d02_active" invisible="1"/>
-                    <field name="d03_active" invisible="1"/>
-                    <field name="d04_active" invisible="1"/>
-                    <field name="d05_active" invisible="1"/>
-                    <field name="d06_active" invisible="1"/>
-                    <field name="d07_active" invisible="1"/>
-                    <field name="d08_active" invisible="1"/>
-                    <field name="d09_active" invisible="1"/>
-                    <field name="d10_active" invisible="1"/>
-                    <field name="d01" attrs="{'invisible': [('d01_active', '=', False)]}"/>
-                    <field name="d02" attrs="{'invisible': [('d02_active', '=', False)]}"/>
-                    <field name="d03" attrs="{'invisible': [('d03_active', '=', False)]}"/>
-                    <field name="d04" attrs="{'invisible': [('d04_active', '=', False)]}"/>
-                    <field name="d05" attrs="{'invisible': [('d05_active', '=', False)]}"/>
-                    <field name="d06" attrs="{'invisible': [('d06_active', '=', False)]}"/>
-                    <field name="d07" attrs="{'invisible': [('d07_active', '=', False)]}"/>
-                    <field name="d08" attrs="{'invisible': [('d08_active', '=', False)]}"/>
-                    <field name="d09" attrs="{'invisible': [('d09_active', '=', False)]}"/>
-                    <field name="d10" attrs="{'invisible': [('d10_active', '=', False)]}"/>
-                    <field name="activity_id" />
-                </xpath>
-            </field>
-        </record>         
-    	
-    	
-    	
         <record id="invoice_form" model="ir.ui.view" >
             <field name="name">invoice.form</field>
             <field name="model">account.invoice</field>
@@ -86,10 +51,12 @@
                     <field name="d08" invisible="1"/>
                     <field name="d09" invisible="1"/>
                     <field name="d10" invisible="1"/>
+					<!-- New Selection Columns -->
+                    <field name="budget_post_id"/>
+                    <field name="activity_id"/>
                 </xpath>
                 <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='account_analytic_id']" position="attributes">
-                	<attribute name="domain">[('company_id', '=', parent.company_id), ('account_type', '=', 'normal'),
-                		('d01','=',d01),('d02','=',d02),('d03','=',d03),('d04','=',d04),('d05','=',d05),('d06','=',d06),('d07','=',d07),('d08','=',d08),('d09','=',d09),('d10','=',d10)]</attribute>
+                	<attribute name="domain">[('company_id', '=', parent.company_id), ('account_type', '=', 'normal')]</attribute>
                 </xpath>
                 <xpath expr="/form/sheet/notebook/page/field[@name='invoice_line_ids']" position="attributes">
                 	<attribute name="context">{'type': type, 'journal_id': journal_id, 'default_invoice_id': id,

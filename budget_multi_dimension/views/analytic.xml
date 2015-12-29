@@ -29,8 +29,11 @@
                     <field name="d08" attrs="{'invisible': [('d08_active', '=', False)]}"/>
                     <field name="d09" attrs="{'invisible': [('d09_active', '=', False)]}"/>
                     <field name="d10" attrs="{'invisible': [('d10_active', '=', False)]}"/>
-                    <field name="activity_id" />
                 </xpath>
+                <xpath expr="//field[@name='account_type']" position="after">
+                    <field name="budget_post_id" />
+                    <field name="activity_id" />
+                </xpath> 
             </field>
         </record>         
 
