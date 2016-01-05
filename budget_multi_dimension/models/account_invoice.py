@@ -4,8 +4,6 @@ from lxml import etree
 from openerp.osv.orm import setup_modifiers
 from openerp import api, fields, models, _
 from openerp.exceptions import UserError, RedirectWarning, ValidationError
-from samba.netcmd import domain
-
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
