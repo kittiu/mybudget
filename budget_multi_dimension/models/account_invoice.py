@@ -273,7 +273,7 @@ class AccountInvoiceLine(models.Model):
     activity_id = fields.Many2one(
         'account.activity',
         string='Activity',
-        domain="[('budget_post_id', '=', budget_post_id)]",
+        #domain="[('budget_post_id', '=', budget_post_id)]",  # Bring back later.
     )
 
     @api.multi

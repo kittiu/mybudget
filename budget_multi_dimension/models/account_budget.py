@@ -18,8 +18,6 @@ class AccountBudgetPost(models.Model):
     @api.constrains('account_ids', 'activity_ids')
     def _check_account_id(self):
         account_ids = [x.account_id.id for x in self.activity_ids]
-        print account_ids
-        print self.account_ids.ids
         if not (set(account_ids) <= set(self.account_ids.ids)):
             raise ValidationError(_('Activity account must be within '
                                     'accounts of budgetary position'))
@@ -31,7 +29,17 @@ class CrossoveredBudget(models.Model):
     dimension_group_id = fields.Many2one(
         'account.dimension.group',
         string='Dimension Group',
+        states={'done': [('readonly', True)]},
     )
+    # DEMO
+    summary_budget_line_ids = fields.One2many(
+        'summary.budget.line',
+        'crossovered_budget_id',
+        string='Summary Budget Lines',
+        states={'done': [('readonly', True)]},
+        copy=True,
+    )
+    # --
     # Active Flag
     d01_active = fields.Boolean(compute='_compute_dimension_active')
     d02_active = fields.Boolean(compute='_compute_dimension_active')
@@ -174,7 +182,7 @@ class CrossoveredBudgetLines(models.Model):
         for line in self:
             # Populate Domain
             group_id = line.crossovered_budget_id.dimension_group_id.id
-            budget_post_id = line.budget_post_id.id
+            budget_post_id = line.general_budget_id.id
             activity_id = line.activity_id.id
             domain = [('dimension_group_id', '=', group_id),
                       ('activity_id', '=', activity_id),
@@ -192,3 +200,56 @@ class CrossoveredBudgetLines(models.Model):
             else:
                 line.analytic_account_id = analytics[0].id
         return
+
+
+# DEMO ONLY
+class SummaryBudgetLine(models.Model):
+    _name = 'summary.budget.line'
+
+    crossovered_budget_id = fields.Many2one(
+        'crossovered.budget',
+        string='Budget',
+        ondelete='cascade',
+        select=True,
+        required=True)
+    activity_id = fields.Many2one(
+        'account.activity',
+        string='Activity',
+        required=True,
+    )
+    month_01 = fields.Float(
+        string='Oct',
+    )
+    month_02 = fields.Float(
+        string='Nov',
+    )
+    month_03 = fields.Float(
+        string='Dec',
+    )
+    month_04 = fields.Float(
+        string='Jan',
+    )
+    month_05 = fields.Float(
+        string='Feb',
+    )
+    month_06 = fields.Float(
+        string='Mar',
+    )
+    month_07 = fields.Float(
+        string='Apr',
+    )
+    month_08 = fields.Float(
+        string='May',
+    )
+    month_09 = fields.Float(
+        string='Jun',
+    )
+    month_10 = fields.Float(
+        string='Jul',
+    )
+    month_11 = fields.Float(
+        string='Aug',
+    )
+    month_12 = fields.Float(
+        string='Sep',
+    )

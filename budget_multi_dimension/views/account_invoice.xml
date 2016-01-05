@@ -52,11 +52,14 @@
                     <field name="d09" invisible="1"/>
                     <field name="d10" invisible="1"/>
 					<!-- New Selection Columns -->
-                    <field name="budget_post_id"/>
+                    <field name="budget_post_id" invisible="1"/>
                     <field name="activity_id"/>
                 </xpath>
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='account_id']" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='account_analytic_id']" position="attributes">
-                	<attribute name="domain">[('company_id', '=', parent.company_id), ('account_type', '=', 'normal')]</attribute>
+                	<attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="/form/sheet/notebook/page/field[@name='invoice_line_ids']" position="attributes">
                 	<attribute name="context">{'type': type, 'journal_id': journal_id, 'default_invoice_id': id,

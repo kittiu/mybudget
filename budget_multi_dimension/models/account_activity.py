@@ -53,3 +53,12 @@ class AccountActivity(models.Model):
             raise ValidationError(_('Activity account must be within '
                                     'accounts of budgetary position'))
 
+    @api.multi
+    def name_get(self):
+        result = []
+        for activity in self:
+            result.append(
+                (activity.id,
+                 "%s / %s" % (activity.budget_post_id.name or '-',
+                              activity.name or '-')))
+        return result

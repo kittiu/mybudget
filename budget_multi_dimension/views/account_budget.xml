@@ -48,7 +48,31 @@
 	                    </widget>
 	                </page>
                 </xpath>-->
-            </field>
+                
+            	<!-- DEMO -->
+                <xpath expr="/form/sheet/notebook/page" position="before">
+                	<page string="Summary Budget line">
+                		<field name="summary_budget_line_ids">
+            				<tree editable="bottom">
+            					<field name="activity_id"/>
+            					<field name="month_01"/>
+            					<field name="month_02"/>
+            					<field name="month_03"/>
+            					<field name="month_04"/>
+            					<field name="month_05"/>
+            					<field name="month_06"/>
+            					<field name="month_07"/>
+            					<field name="month_08"/>
+            					<field name="month_09"/>
+            					<field name="month_10"/>
+            					<field name="month_11"/>
+            					<field name="month_12"/>
+            				</tree>
+            			</field>
+                	</page>
+                </xpath>
+                <!-- END DEMO -->
+        	</field>
         </record>         
 
         <record id="view_budget_post_form" model="ir.ui.view" >
